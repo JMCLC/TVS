@@ -1,0 +1,29 @@
+ex5)
+
+It's a modal class test case
+
+
+
+1º fase draw the diagram
+
+Is in the file
+
+
+2º Expansion of the guards 
+
+P.O 
+
+    [#flavour > 0] pay
+
+    [#flavour == 0] pay/ Error
+
+    [#flavour == 0] cancel
+
+    [#flavour > 0] cancel/Error
+
+    [#flavour > 0] addTopping
+
+    [#flavour == 0] addTooping/Error
+
+    Now add the error cases to the diagram
+

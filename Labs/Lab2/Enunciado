@@ -1,0 +1,80 @@
+Plano da Aula
+
+
+
+Exercício 1
+Considere o seguinte método
+
+       int doSomething(int a, int b, String str, Integer vec)
+que tem as seguintes restrições relativamente aos valores válidos das variáveis de entrada:
+
+a > 0 && b > 2 && b <= 200 && str! = null && str.length() >= 2 && vec.intValue() > 15. 
+
+Utilizando Análise de Domínio, indique os casos de teste que verificam a correcta concretização do domínio para este método. 
+
+Exercício 2
+Considere o seguinte método int f (int x, int a, int b), que recebe três parâmetros e realiza um determinado processamento. O parâmetro x deve pertencer ao intervalo  [a,b] e o parâmetro a deve ser positivo e b não pode ser superior a 1000. Assuma ainda que é lançada uma excepção se f for invocada com parâmetros inválidos.
+
+Utilizando Análise de Domínio, indique os casos de teste que permitem verificar a concretização deste método. 
+
+Exercício 3
+Considere o método transfere(int quantia, Conta origem, Conta destino), que transfere uma quantia de dinheiro da conta origem para a conta destino. Este método funciona correctamente quando a quantia é maior do que 0, a conta origem está no estado abstracto aberto e a conta destino não está no estado abstracto inactivo.
+
+Utilizando a análise de domínio, desenvolva a matriz de domínio que representa os casos de teste que verificam a correcta concretização do domínio válido deste método. Considere ainda que os invariantes de estado da classe Conta são os seguintes:
+
+estado abstracto aberto: saldo >= 0 && inactivo < 500;
+estado abstracto descoberto: saldo < 0 && inactivo < 500; 
+estado abstracto inactivo: inactivo >= 500. 
+Exercício 4
+Considere o método doSomething(float x, int y) cujo domínio satisfaz as seguintes restrições:
+
+x > 1 && x <= 12;
+y <= 12 && y > 1;
+y < 8 - x/2
+Utilizando Análise de Domínio, indique os casos de teste que permitem verificar a correcta implementação do método. 
+Exercício 5
+Considere o método doSomethingElse(int x, int y, int z, Stack aStack) cujo domínio satisfaz as seguintes restrições:
+
+x >= 0 && x <= y
+y < z;
+z <= aStack.size()
+!aStack.isFull()
+Utilizando Análise de Domínio, indique os casos de teste que permitem verificar a correcta implementação deste método. 
+
+Exercício 6
+Considere o método doSomething(float x, int y, float z) cujo domínio satisfaz as seguintes restrições:
+
+x > 1 && x <= 50;
+y > 1 && y <= 50 
+x + y <= z
+z > 0 && z < 30
+Utilizando Análise de Domínio, indique os casos de teste que permitem verificar a correcta implementação deste método. 
+
+Exercício 7
+Considere o método int[] compute(int x, int y) que tem como responsabilidade devolver os números inferiores ou iguais a y que são múltiplos de x. Caso não existam múltiplos de x, então é devolvido um vector com um tamanho 0. Considere ainda que existem as seguintes restrições relativamente aos valores de x e y:
+
+y deve ser maior do que x caso contrário o método lança a excepção InvalidNumber.
+
+tanto x como y só podem ter valores positivos e o método lança a excepção InvalidNumberException caso contrário.
+
+Aplique o padrão de desenho de teste mais apropriado para determinar os casos de teste a aplicar a este método. 
+
+Exercício 8
+Considere o método void push(Object elemento) da classe Stack, o qual adiciona o elemento ao topo da pilha. Caso a pilha esteja cheia, é lançada a excepção PilhaCheia. Utilizando o padrão de testes mais apropriado, realize os casos de teste para testar este método.
+
+Exercício 9
+Considere a seguinte classe:
+
+public class PersonSet {
+  // ...
+  public PersonSet(int maxSize) { ... }
+  public boolean add(Person p) { ... }
+  public int getSize() { ... }
+}
+
+
+Esta classe serve para guardar objectos distintos da classe Person. Cada instância tem uma dada capacidade máxima relativamente ao número de pessoas que pode guardar. Esta capacidade é indicada no momento da criação do PersonSet. O método add(Person per) adiciona uma nova pessoa ao conjunto de pessoas do PersonSet. O valor de retorno indica se a pessoa já tinha sido adicionada previamente (retorno false) ou se ela não fazia ainda parte do conjunto de pessoa do PersonSet (retorno true). Caso o PersonSet esteja cheio, então a invocação deste método dá origem ao lançamento da excepção InvalidInvocationException.
+
+Aplicando o padrão de teste mais adequado, desenhe a bateria de testes para o método add desta classe.
+
+Qual o impacto na aplicação do padrão se considerar que uma Pessoa tem uma morada e um nome e se considera que duas são iguais caso tenham o mesmo nome e a mesma morada?

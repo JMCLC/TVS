@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-04-25T23:26:35 WEST" name="ap.PersonSetTest" finished-at="2024-04-25T23:26:35 WEST" duration-ms="139">
+    <groups>
+    </groups>
+    <test started-at="2024-04-25T23:26:35 WEST" name="Command line test" finished-at="2024-04-25T23:26:35 WEST" duration-ms="139">
+      <class name="ap.PersonSetTest">
+        <test-method signature="testAddExistingPerson()[pri:0, instance:ap.PersonSetTest@1d7acb34]" started-at="2024-04-25T23:26:35 WEST" name="testAddExistingPerson" finished-at="2024-04-25T23:26:35 WEST" duration-ms="25" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddExistingPerson -->
+        <test-method signature="testAddPerson()[pri:0, instance:ap.PersonSetTest@1d7acb34]" started-at="2024-04-25T23:26:35 WEST" name="testAddPerson" finished-at="2024-04-25T23:26:35 WEST" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddPerson -->
+        <test-method signature="testAddPersonToFullSet()[pri:0, instance:ap.PersonSetTest@1d7acb34]" started-at="2024-04-25T23:26:35 WEST" name="testAddPersonToFullSet" finished-at="2024-04-25T23:26:35 WEST" duration-ms="0" status="PASS">
+          <exception class="ap.InvalidInvocationException">
+            <message>
+              <![CDATA[PersonSet is full.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[ap.InvalidInvocationException: PersonSet is full.
+at ap.PersonSet.add(PersonSet.java:17)
+at ap.PersonSetTest.testAddPersonToFullSet(PersonSetTest.java:23)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:139)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:664)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:228)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:961)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:201)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:148)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+at org.testng.TestRunner.privateRun(TestRunner.java:819)
+at org.testng.TestRunner.run(TestRunner.java:619)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:443)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:437)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:397)
+at org.testng.SuiteRunner.run(SuiteRunner.java:336)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1228)
+at org.testng.TestNG.runSuites(TestNG.java:1134)
+at org.testng.TestNG.run(TestNG.java:1101)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:77)
+at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:110)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:106)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+]]>
+            </full-stacktrace>
+          </exception> <!-- ap.InvalidInvocationException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAddPersonToFullSet -->
+      </class> <!-- ap.PersonSetTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- ap.PersonSetTest -->
+</testng-results>

@@ -1,0 +1,133 @@
+Objectivo
+
+    Realização de casos de teste utilizando a framework de testes TestNG
+
+Material de Apoio
+
+    Site oficial da framework TestNG: testng.org, https://github.com/cbeust/testng
+    Descrição da ferramenta:  02 - TestNG.pdf
+
+Plano da Aula
+
+Crie uma directoria algures na sua área (por exemplo, chamada testng) onde vai criar um projecto maven. De forma muito resumida, maven é uma ferramenta de gestão de projectos que tem o objectivo de facilitar as várias tarefas normalmente associadas ao processo de gestão e construção de um projecto de software. Pode consultar mais informação sobre esta ferramenta em https://maven.apache.org.
+Dentro da directoria testng crie o ficheiro pom.xml com o seguinte conteúdo:
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.test.maven</groupId>
+    <artifactId>sample-maven-build</artifactId>
+    <version>1</version>
+    <name>sample-maven-build</name>
+    <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+    <dependencies>
+        <!-- Dependency libraries to include for compilation -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.9.0</version>
+        </dependency>
+    </dependencies>
+</project>
+
+
+De seguida crie o directório src/main/java/ap e coloque o seguinte ficheiro Calculator.java no directório criado. Dê o seguinte comando "mvn compile" no directório raiz do projecto (testng). Este comando permite compilar todo o código fonte presente em src/main/java.
+
+Os testes a desenvolver num projecto maven devem ser guardados no directório src/test/java, tendo que ter ainda em conta depois o package das classes de testes. A especificação da classe Calculator é a seguinte:
+
+/**
+ * This class represents a calculator that is able to sum and divide two Integer numbers.
+ * Each calculator has a name and keeps the number of operations executed without errors.
+ **/
+
+package ap;
+
+public class Calculator {
+	
+    private final String name;
+    private int numberOfOperations;
+
+    /**
+     * Creates a calculator with a given name. The name must be a string with a length between 2 and 5.
+     * 
+     * @param name the name of the created calculator
+     *
+     * @throws IllegalArgumentException if the name is null, or its length is greater than 5
+     *          or smaller than 2.
+     **/
+    public Calculator(String name) {
+        // ...
+    }
+    
+    /**
+     * Sums two integers and returns the result of the sum. Null integers are considered
+     * as 0.
+     *
+     * @param a the first integer to add
+     * @param b the second integer to add
+     *
+     * @returns the result of this operation.
+     **/
+    public Integer sum(Integer a, Integer b) {
+        // ...
+    }
+
+    /**
+     * Divides two integers and returns the result of the division. Null integers are considered
+     * as 0.
+     *
+     * @param a the first integer
+     * @param b the second integer
+     *
+     * @returns the result of the division.
+     * @throws IllegalArgumentException if b is 0.
+      **/
+    public Integer divide(Integer a, Integer b) {
+        // ...
+    }
+
+    /**
+     * @returns the name of this calculator
+     **/
+    public String getName() {
+        // ...
+    }
+
+    /**
+     * @returns the number of operations performed on this claculator without error.
+     **/
+    public int getNumberOfOperations() {
+        // ...
+    }
+}
+
+
+Uma vez criado o projecto, podemos agora começar a desenvolver os casos de teste que irão verificar o correcto funcionamento da classe Calculator. Os casos de teste devem ser concretizados na classe de teste TestCalculator. Esta classe deve ser guardada no directório src/test/java/ap e o seu esqueleto é o seguinte:
+
+package ap;
+ 
+import org.testng.annotations.Test;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import static org.testng.Assert.*;
+
+@Test 
+public class TestCalculator {
+
+}
+
+Os casos de teste a concretizar nesta classe devem ter em conta  a especificação indicada anteriormente da classe Calculator:
+
+    Primeiro realize os testes relativos ao construtor desta classe. 
+    Depois de desenvolver estes testes, dê o comando mvn test, Este comando compila o código fonte, o código de teste e executa todos os testes. Pode ver ver uma descrição mais detalhada dos testes realizados em target/surefire-reports/index.html.
+    Teste o método sum() desenvolvendo um conjunto de casos de teste que verifique o comportamento correcto deste método. Corra os testes (dando o mesmo comando "mvn test") e corrija possíveis bugs no código encontrados pelos casos de teste.
+    Finalmente, repita o mesmo procedimento para o método divide().
+
+
+Nota: A classe Calculator tem alguns erros, pelo que quando correr a sua bateria de testes, alguns dos testes devem falhar. Corrija estes erros encontrados pelos testes que falharam e volte a correr os testes para ter a certeza que o código foi bem corrigido. 
+
+Pode comparar a sua solução com a seguinte solução proposta: lab01-solution.tgz.

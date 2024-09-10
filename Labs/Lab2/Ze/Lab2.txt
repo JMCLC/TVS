@@ -1,0 +1,104 @@
+Ex1)
+
+a > 0 && b > 2 && b <= 200 && str! = null && str.length() >= 2 && vec.intValue() > 15
+
+                            ON          OFF
+a > 0                       0           1
+b > 2                       2           3
+b <= 200                    200         201
+str != null                 null        "abcd"
+str.length() >= 2           "ab"        "a"
+vec.intValue() > 15         15          16
+
+
+        TC                  1   2   3   4   5   6   7   8   9   10  11  12
+
+                    ON     15
+        .intValue >= 15
+vec                 OFF         16
+
+        TYP         IN              20  25  30  40  45  50  100 1000    44  33  2000
+
+                    ON              0
+        > 0         
+a                   OFF                 1
+
+        TYP         IN     2    8           10  12  30  100 50  70  90  200
+
+                    ON                      2
+        > 2         
+                    OFF                         3
+
+b                   ON                              200
+        <= 200      
+                    OFF                                 201
+
+        TYP         IN     5    7   9   11                  100 120 150 180
+
+
+                    ON                                      null
+        != null
+                    OFF                                         4
+
+str                 ON                                              2
+        .length() >= 2
+                    OFF                                                 1
+
+        TYP         IN      3   4   5   10  12  13  9   11                                                          
+
+Expected Result             F   T   F   T   F   T   T   F   F   T   T   F
+
+TC = Test Cases
+
+Ex2)
+
+a > 0 && b <= 1000 && a <= b && x >= a && x <= b
+
+                            ON          OFF
+a > 0                       0           1
+b <= 1000                   1000        1001
+                            (a = 500)   (a = 500)
+a <= b                      500         499
+                            (a = 500)   (a = 500)
+x >= a                      500         499
+                            (b = 500)   (b = 500)
+x <= b                      500         501
+
+
+        TC                  1   2   3   4   5   6   7   8   9   10
+                    ON      0
+        > 0
+a                   OFF         1
+
+        TYP         IN              100 10  500 500 500 500 400 200
+
+                    ON              1000
+        <= 1000
+                    OFF                 1001
+
+b                   ON                      500
+        >= a        
+                    OFF                         499
+        
+        TYP         IN      4   20                  600 700 500 500 
+
+                    ON                              500
+        >= a
+                    OFF                                 499
+
+x                   ON                                      500
+        <= b
+                    OFF                                         501
+
+        TYP         IN      3   10  500 200 500 499                                   
+
+Expected Result             F   T   T   F   T   F   T   F   T   F
+
+Ex3)
+
+amount > 0 && source is active && destination is not inactive
+
+                            ON          OFF
+Active                      (0, <499)   (-1, x)
+                            (>0, 499)   (x, 500)
+

@@ -1,0 +1,67 @@
+Bookstore
+
+addBook
+    . Service StoreBook
+
+search (author, title, price)
+    .Service.findBooks
+
+
+
+
+addBook
+
+Category Partion test
+
+
+IN: book, Service
+
+Out; exc, interaction with service 
+
+       Category         Choices 
+
+        |  Valid       |     book
+Book    |  Invalid     |     mull
+        |  error       |
+-----------------------|-------------
+Service |available     |     S1
+        |unavailable   |     S2
+        |[error]       |
+
+
+//code in other file
+
+Search
+
+
+
+                search criteria
+                /      |     \
+               /       |      \
+               |       |      |
+IN: Service, author, title, price
+
+OUT: exc, interaction with service, books
+
+
+            Category                 Choices 
+
+Service |available          |     S1
+        |unavailable        |     S2
+        |[error]            |
+-----------------------------------
+        |Some books         | {b1,b2,b3}
+Search  |                   |
+criteria| no books          | {}
+--------------------------------------
+        | null              | null
+        |                   |
+        |price greater      | 50
+Price   |then all books     |
+        |                   |
+        |Price greater      | 25
+        |then some books    |
+        |                   |
+        |Price smaller      | 5
+        |then all books     |
+----------------------------------------        

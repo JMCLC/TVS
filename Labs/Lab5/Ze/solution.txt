@@ -1,0 +1,30 @@
+5)
+
+-----------------------------------------------------------------------------------------------------
+TC  |   level 0 |   level 1 | level 2               | level 3       | Expected State    | Exception |
+-----------------------------------------------------------------------------------------------------
+1   |   new     |   -       |   -                   |   -           |   w.o             |   -       |
+2   |   new     |   newCup  |   -                   |   -           |   p.o             |   -       |
+3   |   new     |   newCone |   -                   |   -           |   p.o             |   -       |   
+4   |   new     |   newCup  |   addFlavor           |   -           |   p.o             |   -       |
+5   |   new     |   newCup  |   getCost             |   -           |   p.o             |   -       |
+6   |   new     |   newCup  |   [#f>0]addToping     |   -           |   a.t             |   -       |
+7   |   new     |   newCup  |   [#f>0]cancelOrder   |   -           |   p.o             |   yes     |
+8   |   new     |   newCup  |   [#f=0]addToping     |   -           |   p.o             |   yes     |
+9   |   new     |   newCup  |   [#f>0]pay           |   -           |   w.o             |   -       |
+10  |   new     |   newCup  |   addFlavor           |   -           |   p.o             |   -       |
+11  |   new     |   newCup  |   [#f=0]pay           |   -           |   p.o             |   yes     |
+12  |   new     |   newCup  |   [#f>0]addToping     |   getCost     |   a.t             |   -       |
+13  |   new     |   newCup  |   [#f>0]addToping     |   addToping   |   a.t             |   -       |
+14  |   new     |   newCup  |   [#f>0]addToping     |   pay         |   w.o             |   -       |
+-----------------------------------------------------------------------------------------------------
+
+ON/OFF Points:
+
+- p.o State:
+    -   addToping:
+        - [#f=0]:   ON: 0   OFF: 1,-1
+        - [#f>0]:   ON: 0   OFF: 1
+    -   pay:
+        - [#f=0]:   ON: 0   OFF: 1,-1
+        - [#f>0]:   ON: 0   OFF: 1

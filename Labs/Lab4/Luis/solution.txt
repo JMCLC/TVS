@@ -1,0 +1,178 @@
+ex1)
+
+It is a non modal 
+
+1º Get the Class invariants 
+
+x > -10 && x <= 40 &&  y >= 30 && z <= 50
+
+
+2º Build the domain matrixes
+
+                  1   2   3     4    5  6  7   8 
+    ----------------------------------------------
+    |      | ON |-10    
+x   | > -10|----|----------------------------------
+    |      | OFF|    -9 
+    ----------------------------------------------
+    |      | ON |         40    
+    | <=40 |----|---------------------------------
+    |      | OFF|               41
+    |----------------------------------------------
+    |TYP   | IN |                   -5  0  15  20
+    |----------------------------------------------
+    |      | ON |                   30
+y   | >= 30|----|----------------------------------
+    |      | OFF|                       29
+    |----------------------------------------------
+    |TYP   |IN  | 40  100 1000  200         50   99
+    |-----------------------------------------------
+    |      | ON |                           50
+z   | <= 50|----|-----------------------------------
+    |      | OFF|                                51
+    |-----------------------------------------------
+    |TYP    IN  | -10 -30  0    10   20 30
+-----------------------------------------------------
+                |
+expected result |  F   T  T  F      T    F   T    F
+
+
+
+
+3º Write the test cases, At the end all the tests will test all the boundary conditions presented in the table and all the methods.
+  Theres no need to make test cases for each method that tests all the boundary conditions, use different methods to achieve them, make it
+  in this way the processes of testing less resource intensive.
+
+@Test
+public class testScopeExample {
+    @Test(expectedExceptions = InvalidStateException.class)
+    public void test1() {
+        new Example (-10, 40, -10);
+    }
+
+    public void test2() {
+        Example e =  new Example(-8, 100, 30);
+        //Act
+        e.decX();
+        //Assert
+        assertEquals(e.getx(), -9);
+        assertEquals(e.gety(), 100);
+        assertEquals(e.getz(), -30);
+        assertEquals(e.max(), 100);
+    }
+
+    public void test3() {
+        Example e =  new Example(39, 1000, 0);
+        //Act
+        e.icrX();
+        //Assert
+        assertEquals(e.gety(), 1000);
+        assertEquals(e.getz(), 0);
+        assertEquals(e.max(), 1000);
+        assertEquals(e.getx(), 40);
+    }
+
+    public void test4() {
+        Example e = new Example(2,200,10);
+        //Act & Assert
+
+        assertThrows(InvalidStateException.class, () -> {e.setX(41);});
+
+        assertEquals(e.max() , 200);
+        assertEquals(e.getX(), 2);
+        assertEquals(e.getZ(), 10);
+        assertEquals(e.getY(), 200)
+
+    }
+}
+
+It should be done for the rest of the variables Y and Z
+
+ex2)
+
+We consider it to be a non modal since the changes to the class will no affect consequently its result
+
+
+- #prizes <= 10 && Every p belonging to prizes 10 <= #p.description < 100 && For every p1 and p2 belonging to prizes, P1.id = P2.id => P1 = P2
+
+
+
+                              1   2   3     4   5   6   7   8 
+                ----------------------------------------------
+                |      | ON | 10    
+#prizes         | <= 10|----|----------------------------------
+                |      | OFF|    11 
+                |----------------------------------------------
+                |TYP    IN  |                   
+                |----------------------------------------------
+                |      | ON |         10              
+p.discritpion   | >= 10|----|----------------------------------
+                |      | OFF|               9            
+                |----------------------------------------------
+                |      | ON |                   100    
+                | <100 |----|---------------------------------
+                |      | OFF|                       99
+                |----------------------------------------------
+                |TYP    IN  |         
+                |-----------------------------------------------
+                |      | ON |                           T
+                | (1)  |----|-----------------------------------
+p.id            |      | OFF|                                F
+                |-----------------------------------------------
+                |TYP    IN  | 
+                -----------------------------------------------------
+                            |
+            expected result | T   F   T     F    F  T   T    F 
+
+
+
+The test for the method add is going to be of the category testing pattern
+
+
+add(Prize p)
+|
+|---> add p if invariant not violated
+|
+|---> throw exception if #p.description is invalid
+|
+|---> throw exception ig p.id is not unique
+|
+|---> increase Size if p is added
+|
+|---> throw exception if Full
+
+
+Inputs  : p, p.id, p.description, set
+
+Outputs : Set, exception, size 
+
+
+
+
+                | Category          | Choices
+                |-------------------|---------------------------------------
+p               |  valid            |new Prize()
+                |                   |
+                | invalid           | null
+--------------- |-----------------------------------------------------------
+p.id            |already exists     | id1
+                |                   |                                           2
+                | uniq              | idx 
+-----------------------------------------------------------------------------
+                | not Full          | {}, {P1,...Pm} 0 < m < 9, {P1,...,P9}
+set             |-------------------|                                             4
+                |   Full            | {P1,......,P10}
+-----------------------------------------------------------------------------
+                |                   |
+p.description   |valid([10,100[)    | 10, 99, 10<x<99                             3
+                |                   |
+                --------------------------------------------------------------
+                |                   |
+                |invalid(           |
+                |       <10||>=100] |   9, 100, 5, 200
+                |        )          |                
+                |[ERROR]            |    
+------------------------------------------------------------------------------
+
+
+In total we have 1 + 24 + 4 = 29 test cases.

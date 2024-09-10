@@ -1,0 +1,203 @@
+ex4)
+
+category-partion testing se o método é simples e não envolve muitas variáveis 
+
+Combination test se o método envolve algumas variaveis e depende de outros possiveis metodos, têm logica combinatória
+
+
+->  Analisar a função
+
+1º Identificar todas as funções usadas no método
+    Função add()
+
+     -> Principal
+
+        -> adicionar o objeto se possivel
+    
+            -> Secundário
+
+                -> Aumentar o size se adicionar
+
+
+2º Identificar o input e o output do método 
+
+    Inputs: obj, size, lista 
+
+    outputs: lista, size
+
+
+3º Identificar as categorias de cada parametro de input e 4º Escolhas 
+
+        Categoria           Escolhas 
+
+
+        inválido            null                            1
+         [error] só é preciso um caso de teste
+Obj                         Ox (Pertence à lista)
+        valido                                              2
+                            Oy(Não pertence à lista)
+
+
+
+
+        não-cheio           {}, {O1}, {O1, ...,Om} 1 < m < Max - 1
+lista                                                               4
+        cheio               {O1, ..., Omax}
+
+        M C [0, Max-1]      0,1,m
+Size 
+        Max                 max
+
+
+5º Indentificar condições e limitações
+
+Ox pertence à lista é impossivel a lista estar vazia 
+
+size = #lista
+
+Temos 9 casos de testes 4 * 2
+
+
+6º Gerar os casos de testes 7º Dar o resultado esperado 
+
+TC                 inputs                        outputs  
+
+           obj      size    lista              lista                size
+
+1          null      1       {O1}               {O1}                  1
+
+2           Ox       1       {Ox}             {Ox, Ox}                2      
+
+3           Ox       m      {O1, ... Om}     {O1, .... Om,Ox}       m + 1
+
+4           Ox      max     {O1, ... Omax}   {O1, ... ,Omax}         max
+
+5           Oy       0       {}               {Oy}                     1
+
+6           Oy       1       {O1}             {O1, Oy}                 2      
+
+7           Oy       m      {O1, ... Om}     {O1, .... Om,Oy}        m + 1
+
+8           Oy      max     {O1, ... Omax}   {O1, ... ,Omax}          max
+
+
+Método contains
+
+2º
+
+    Inputs: obj, lista
+
+    Outputs: valor de retorno
+
+
+3º e 4º
+        Categorias          Escolhas 
+
+          vazio                {}
+Lista
+        com elementos         {O1}, {O1, ..., Om}
+
+
+        invalido[error]
+
+Obj    
+        Obj não pertence à lista 
+
+
+        Obj pertence à lista
+
+
+    
+5º 
+
+Combinação impossivel é a lista vazia com o objeto pertencete à lista (portanto não )
+
+
+ex4)
+
+
+
+                                n_acidentes ou n_aci
+                _______________________|________________________________
+                 /                \               \               \
+             =0 /                  \ =1            \ [2,4]         \ 
+               age                 age             age              \
+         <=25 /   \ >25            / \              /\               \
+             /     \        <=25  /   \ >25    <=25/  \  >25          \
+            V0      V1          V2      V3        V4  V5              V6
+           +50      +25        +100    +50      +400  +200            cancels
+
+
+
+V0 -> n_aci = 0 && age <= 25                 +50
+
+V1 -> n_aci = 0 && age > 25                  +25
+
+V2 -> n_aci = 1 && age <=25                  +100
+
+V3 -> n_aci = 1 && age > 25                  +50
+
+V4 -> n_aci >= 2 && n_aci <= 4 && age <= 25  +400
+
+V5 -> n_aci >= 2 && n_aci <= 4 && age > 25   +200
+
+V6 -> n_aci > 4, cancela
+
+
+V0      
+                          Test Cases 
+                        1   -    -   2   -
+                ON      0
+        = 0
+n_aci           OFF         -1
+
+                OFF              1
+        
+        TYP     IN                   0   0
+
+
+                ON                   25   
+        <=25
+age             OFF                      26
+
+        TYP     IN      20  22   24                    
+
+Expected Result         50  IMP  V2  50  V1
+
+
+
+
+V1      
+                          Test Cases 
+                        1   -    -   -   4
+                ON      0
+        = 0
+n_aci           OFF         -1
+
+                OFF              1
+        
+        TYP     IN                   0   0
+
+
+                ON                   25   
+        >25
+age             OFF                      26
+
+        TYP     IN      33  40   42                    
+
+Expected Result         50  IMP  V3  V0  25  
+
+
+V6      
+                          Test Cases 
+                        -   5
+                ON      4
+        > 4
+n_aci           OFF         -1
+        
+        TYP     IN  
+
+age     TYP     IN      30   18                   
+
+Expected Result         V5   Cancels
+

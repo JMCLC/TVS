@@ -1,0 +1,579 @@
+
+== -> 1 ON point and 2 OFF 
+
+
+
+Ex1)
+
+a > 0 && b > 2 && b <= 200 && str! = null && str.length() >= 2 && vec.intValue() > 15
+
+                            ON          OFF
+a > 0                       0           1
+b > 2                       2           3
+b <= 200                    200         201
+str != null                 null        "abcd"(anyString)
+str.length() >= 2           "ab"        "a"
+vec.intValue() > 15         15          16
+
+
+        TC                  1   2   3   4   5   6   7   8   9   10    11  12
+
+                    ON     15
+        .intValue >= 15
+vec                 OFF         16
+
+        TYP         IN              20  25  30  40  45  50  100  1000 44  33 
+
+                    ON              0
+        > 0         
+a                   OFF                 1
+
+        TYP         IN     2    8           10  12  30  100 50  70    90  200
+
+                    ON                      2
+        > 2         
+                    OFF                         3
+
+b                   ON                              200
+        <= 200      
+                    OFF                                 201
+
+        TYP         IN     5    7   9   11                  100 120  150  180
+
+
+                    ON                                      null
+        != null
+                    OFF                                           4
+
+str                 ON                                                2
+        .length() >= 2
+                    OFF                                                    1
+
+        TYP         IN      3   4   5   10  12  13  9   11                                                          
+
+Expected Result             F   T   F   T   F   T   T   F   F      T  T    F
+
+TC = Test Cases
+
+Ex2)
+
+a > 0 && b <= 1000 && a <= b && x >= a && x <= b
+
+                            ON          OFF
+a > 0                       0           1
+b <= 1000                   1000        1001
+                            (a = 500)   (a = 500) -> fixar sempre o ponto intermediario relativo ao limite superior da variável que precisa do valor
+a <= b                      500         499
+                            (a = 500)   (a = 500)
+x >= a                      500         499
+                            (b = 500)   (b = 500)
+x <= b                      500         501
+
+
+        TC                  1   2   3   4   5   6   7   8   9   10
+                    ON      0
+        > 0
+a                   OFF         1
+
+        TYP         IN              100 10  500 500 500 500 400 200
+
+                    ON              1000
+        <= 1000
+                    OFF                 1001
+
+b                   ON                      500
+        >= a        
+                    OFF                         499
+        
+        TYP         IN      4   20                  600 700 500 500 
+
+                    ON                              500
+        >= a
+                    OFF                                 499
+
+x                   ON                                      500
+        <= b
+                    OFF                                         501
+
+        TYP         IN      3   10  500 200 500 499                                   
+
+Expected Result             F   T   T   F   T   F   T   F   T   F
+
+Ex3)
+
+amount > 0 && source is active && destination is not inactive
+
+x -> balance
+
+y -> inactive
+
+T -> Success
+
+F->  Failure
+
+(x, y)
+
+           x >=0              ON          OFF
+Active                      (0, y<499)   (-1, y<499)
+           y < 500          (x>0, 499)   (x>0, 500)
+
+           x < 0
+discoverd                   (-1, y<499)  (0, y<499)
+           y < 500          (x<0, 499)   (x<0, 500)
+
+          
+Inactive   y >= 500         (x>0, 500)   (x>0, 499)
+                            (x<0, 500)   (x<0, 499)
+
+
+Professor Solution
+
+
+
+
+State           Condition       Type                    Test cases
+
+                                        1       2       3       4       5       6               7       8       9       10
+
+
+                                ON      0
+                x > 0           
+Amount                          OFF             1
+
+                TYP             IN                      15      20      100     200             150
+
+
+                                ON                      (0,1)
+                isActive                
+                                OFF                             (-1,2)
+Source  
+
+                TYP             IN      (5,10)  (20,15)                 (200,1) (150,10)        (300,5)
+
+                                ON                                      (5,500)
+Destination     is not  
+                active
+                                OFF                                             (12,499)
+                                OFF                                                             (-12,499)   
+
+                TYP             IN      (5,10)  (-7,10) (5,1)   (-10,2)
+
+ExpectedResult                            F       T      T         F       F       T                T
+
+
+
+
+
+
+
+
+Isto está errado mas como exemplo se fosse outro enunciado não é mau raciocinio 
+
+
+Needs for both to be active
+
+  A1       A2
+Active - Active
+States  Vars    TC              1       2       3       4       5       6       7       8             
+
+                        ON      0 
+                >= 0    
+        x              
+                        OFF            -1
+
+A1              TYP     IN                      300     350    200     300     700      800
+                       
+                        ON                      499
+        
+                < 500   
+        y       
+                        OFF                             500
+
+                TYP     IN      493     470                     300    400    450       350
+
+
+                        ON                                      0 
+                >= 0    
+        x              
+                        OFF                                            -1
+
+A2              TYP     IN     300     399     200     275                       350     400    
+                       
+                        ON                                                       499    
+        
+                < 500   
+        y       
+                        OFF                                                              500
+
+
+                TYP     IN      498     494    400     370      380     400      300     250
+
+
+Result                          T       F      T        F      T         F        T      F
+
+
+
+
+
+A1       O1
+Active - Overdrawn
+States  Vars    TC              1       2       3       4       5       6       7       8             
+
+                        ON      0 
+                >= 0    
+        x              
+                        OFF            -1
+
+A1              TYP     IN                      300     350    200     300     700      800
+                       
+                        ON                      499
+        
+                < 500   
+        y       
+                        OFF                             500
+
+                TYP     IN      493     470                     300    400    450       350
+
+
+                        ON                                      -1 
+                < 0    
+        x              
+                        OFF                                            0
+
+O1              TYP     IN     300     399     200     275                       350     400    
+                       
+                        ON                                                       499    
+        
+                < 500   
+        y       
+                        OFF                                                              500
+
+
+                TYP     IN      498     494    400     370      380     400      300     250
+
+
+Result                          T       F      T        F      T         T        T      F
+
+
+
+Resposta do chat:
+
+  TC | Amount | Source State | Destination State | Result
+---------------------------------------------------------------
+  1     | 100     | Active       | Active            | Success
+  2     | 10      | Active       | Active            | Success
+  3     | 500     | Active       | Active            | Failure
+  4     | 200     | Active       | Active            | Success
+  5     | 500     | Active       | Active            | Failure
+  6     | 499     | Active       | Active            | Success
+  7     | 1000    | Active       | Active            | Failure
+  8     | 4       | Active       | Active            | Success
+  9     | 20      | Active       | Active            | Success
+  10    | 600     | Active       | Active            | Failure
+  11    | 100     | Active       | Discovered        | Success
+  12    | 10      | Active       | Discovered        | Success
+  13    | 500     | Active       | Discovered        | Failure
+  14    | 200     | Active       | Discovered        | Success
+  15    | 500     | Active       | Discovered        | Failure
+  16    | 499     | Active       | Discovered        | Success
+  17    | 1000    | Active       | Discovered        | Failure
+  18    | 4       | Active       | Discovered        | Success
+  19    | 20      | Active       | Discovered        | Success
+  20    | 600     | Active       | Discovered        | Failure
+
+
+
+ex4)
+
+                ON          OFF
+
+x>1             1.0           0.999999
+
+x<=12           12.0          12.000001
+
+y<=12           12          13
+
+y>1             1           2
+
+y<8-(x/2)       ?           ? -> x= 7.5   y < 8 - 7.5/2 -> y < 4.25
+
+
+
+
+Var     Condition       Type                    Test Cases
+
+                                1       2               3       4               5         6         7         8         9       10
+
+                        ON      1.0
+        x > 1
+x                       OFF             0.999999
+
+                        ON                              12.0
+        x <= 12         
+                        OFF                                     12.000001
+        
+        TYP             IN                                                      10.0      11.0      6.0       5.0    7.5        7.5
+
+
+                        ON                                                      12
+        y <= 12 
+y                       OFF                                                               13
+
+                        ON                                                                          1                                              
+        y > 1         
+                        OFF                                                                                   2
+
+                        ON                                                                                           5(Como é com estes arredondamentos ? 4,25 -> 5 ? )    
+        y < 8 - x/2
+                        OFF                                                                                                     4
+
+        TYP             IN      2       5               8       10                                                      
+
+Result                          F       T               T       F              T          F         F         T      F          V
+
+
+
+
+ex5)
+
+aStack:
+
+empty   Stack.size == 0
+
+
+loaded  Stack.size > 0 
+
+full    Stack.size == MAXSTACK 
+
+MAXSTACK = 32767
+
+                        ON      OFF           
+         
+x >= 0                  0       1
+
+                      (x=30)   (x=30)
+
+y >= x                 30       29  
+
+                      (y=30)   (y=30)
+
+z > y                  30       31
+
+                      (z=40)   (z=40)
+
+aStack.size() >= z     40       39
+
+                        (aStack.size() = 32766)
+
+!aStack.isFull()      32767     32766
+
+
+
+
+
+        TC                                      1       2       3        4       5       6      7       8       9       10
+
+                                ON              0
+        >= 0
+
+x                               OFF                     -1
+
+        TYP                     IN                              30      30      27      25      10      70      79      30    
+
+       
+                                ON                              30            
+        >= x        
+                                OFF                                     29                                 
+y        
+        TYP                     IN             40       60                      30      30     39       36      60      70               
+
+                                ON                                              30
+        > y         
+z                               OFF                                                     31
+
+        TYP                     IN              50      70      46      88                      40      40      70      80                                 
+
+
+                                ON                                                              40                                                  
+        aStack.size() >= z
+aStack                          OFF                                                                     39
+
+                                ON                                                                              32767  
+        !aStack.isFull()
+                                OFF                                                                                     32766
+
+        TYP                     IN              70      80      46      90      40      45                                   
+
+Expected Result                                 T       F       T       F       F       T       T       F       F       T
+
+
+
+
+
+ex6)
+
+
+                ON    OFF
+
+x > 1           1.0   1.000001
+
+x <= 50         50.0  50.000001
+
+y > 1           1   2
+
+y <= 50         50  51
+
+(x=15.8,y=10)        
+z >= x + y      25.8 25.799999
+
+z > 0           0.0    0.000001
+
+z < 30          30.0   29.999999
+
+
+
+var     Condition       Type                                                    Test Cases
+
+                                1       2               3       4               5       6       7       8       9       10              11      12                13      14
+
+                        ON      1.0
+        >1           
+                        OFF             1.000001
+x
+                        ON                              50.0
+        <=50
+                        OFF                                     50.000001
+
+        TYP             IN                                                      10.0     11.0    12.0   13.0    15.8    15.8            5.0      3.0             10      4
+
+
+                        ON                                                      1                                                      
+        >1              
+y                       OFF                                                             2
+        
+                        ON                                                                      50
+        <=50
+                        OFF                                                                             51      
+
+        TYP             IN      20      15              23      10                                              10      10              20      20               20     2                                                                                                                                 
+
+                        ON                                                                                      25.8                                                                                          
+        >=x+y
+z                       OFF                                                                                             25.799999
+
+                        ON                                                                                                              0.0      
+        >0
+                        OFF                                                                                                                     0.000001                                                                                                                          
+
+                        ON                                                                                                                                       30.0
+        <30
+                        OFF                                                                                                                                             29.999999
+
+        TYP             IN      23.0    18.0            74.0    65.5          12.0    14.0     63.0            
+
+ExpectedResult                  F       T               F       F             F       T        F                T       F               F       F                T      F
+
+
+
+ex7)
+
+To test the `compute(int x, int y)` method based on the provided requirements and constraints, we can apply the following test design techniques:
+
+1. **Equivalence Partitioning:**
+   Divide the input space into equivalence partitions, where each partition contains a set of test cases that should be treated similarly by the system. For this method, the equivalence partitions would be:
+   - Partition 1: Valid values of x and y, where y > x.
+   - Partition 2: Invalid values of x and y, where y <= x.
+   - Partition 3: Invalid values of x or y, where x or y is negative.
+
+2. **Boundary Value Analysis:**
+   Test the boundaries of the input space, including values at lower and upper limits, as well as values slightly above and below those limits. This is important because errors often occur at the boundaries. For this method, the test cases would include:
+   - Test cases for the lower and upper limits of x and y.
+   - Test cases for values slightly below and above the limits of x and y.
+
+Combining Equivalence Partitioning and Boundary Value Analysis, we can create a comprehensive set of test cases to ensure effective coverage of the requirements and constraints of the `compute(int x, int y)` method:
+
+1. **Test cases for Equivalence Partitions:**
+   - Test with valid values of x and y, where y > x.
+   - Test with invalid values of x and y, where y <= x.
+   - Test with invalid values of x or y, where x or y is negative.
+
+2. **Test cases for Boundary Value Analysis:**
+   - Test with x and y at their lower and upper limits.
+   - Test with values slightly below and above the limits of x and y.
+
+3. **Additional tests:**
+   - Test with x = 0 and y > 0 to verify behavior when x is zero.
+   - Test with x > y to verify behavior when there are no multiples of x in y.
+
+These test cases cover a wide range of possible scenarios and should help ensure that the `compute(int x, int y)` method functions correctly according to the specified requirements and constraints.
+
+ex8)
+
+
+To test the `push(Object elemento)` method of the Stack class, which adds an element to the top of the stack and 
+throws a PilhaCheia exception if the stack is full, we can utilize the following test design approach:
+
+1. **Boundary Value Analysis:**
+   Test the boundaries of the input space, focusing on the limits of the stack size. This approach is suitable because 
+   the behavior of the method changes when the stack reaches its maximum capacity.
+
+   - Test with an empty stack and add elements until it reaches its maximum capacity.
+   - Test adding an element to a stack that is one element below its maximum capacity.
+   - Test adding an element to a stack that is already full, expecting the PilhaCheia exception.
+
+2. **Equivalence Partitioning:**
+   Divide the input space into partitions representing different states of the stack, focusing on whether the stack is empty, partially full, or full.
+
+   - Partition 1: Empty stack (before any elements are added).
+   - Partition 2: Stack with some elements but not full.
+   - Partition 3: Stack full (reached maximum capacity).
+
+3. **Negative Testing:**
+   Test scenarios that should result in an exception being thrown.
+
+   - Test pushing null element onto the stack, expecting NullPointerException.
+   - Test pushing elements onto a stack after it has been marked as full, expecting PilhaCheia exception.
+
+By combining Boundary Value Analysis, Equivalence Partitioning, and Negative Testing, we can create a comprehensive 
+set of test cases to ensure that the `push(Object elemento)` method behaves correctly under various conditions and handles exceptions appropriately.
+
+
+
+ex9)
+
+To test the `add(Person p)` method of the `PersonSet` class, which adds a new person to the 
+set of people in the `PersonSet`, and throws an `InvalidInvocationException` if the `PersonSet` is full, we can utilize the following test design approach:
+
+1. **Boundary Value Analysis:**
+   Test the boundaries of the input space, focusing on the limits of the maximum size of the `PersonSet`.
+
+   - Test adding a person to an empty `PersonSet`.
+   - Test adding a person to a `PersonSet` that is one person below its maximum capacity.
+   - Test adding a person to a `PersonSet` that is already full, expecting the `InvalidInvocationException`.
+
+2. **Equivalence Partitioning:**
+   Divide the input space into partitions representing different states of the `PersonSet`, focusing on whether 
+   the `Person` being added is already in the set or not.
+
+   - Partition 1: Adding a person that is not already in the `PersonSet`.
+   - Partition 2: Adding a person that is already in the `PersonSet`.
+
+3. **Negative Testing:**
+   Test scenarios that should result in an exception being thrown.
+
+   - Test adding null person to the `PersonSet`, expecting `NullPointerException`.
+   - Test adding a person to a `PersonSet` after it has been marked as full, expecting `InvalidInvocationException`.
+
+If we consider that a `Person` has an address and a name, and two `Person` objects are considered equal 
+if they have the same name and address, this introduces additional considerations for testing the `add(Person p)` method:
+
+4. **Equality Testing:**
+   Test scenarios where the `Person` being added is considered equal to a person already in the `PersonSet`.
+
+   - Test adding a `Person` with the same name and address as a person already in the `PersonSet`, expecting `false` (indicating the person was already in the set).
+
+The impact of considering additional attributes for equality testing is that we need to expand our test cases to cover 
+scenarios where two `Person` objects may be considered equal based on these attributes. This means additional test cases 
+need to be designed to ensure that the `add` method correctly handles situations where equality is determined by both name 
+and address. This involves considering different combinations of names and addresses to ensure that the equality comparison 
+is robust and accurate.

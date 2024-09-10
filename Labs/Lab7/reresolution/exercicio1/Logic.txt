@@ -1,0 +1,131 @@
+Analyze the addBook method 
+
+
+What method is used from the BookStoreService to achieve this function ?
+
+Answer: The method -> storeBook(Book book) throws ServiceUnavailableException;
+
+
+Due to its simplicity we can use category partition to analyze the method itself
+
+
+1º Identify all functions of the MUT 
+
+    -Primary function -> Interactions with the service (try to add a book to the repository ) 
+
+    -Secondary Function->
+
+        Changesi in the repository due to execution of the service (The size of the repository of books)
+
+        In case of communication error between the BookStoreService and repository, the service will throw an exception ServiceUnavailableException
+        that will make the function throw an CannotProcessRequestException
+
+        In case the book that the user want to add is null then the function will throw the NullPointerException
+
+
+2º Identify the inputs and outputs
+
+
+ Inputs: Book and Service 
+
+
+ Outputs: exception, interactions with Service 
+
+
+3º Identify the categories for each input parameter and 4º Partition each category into choices 
+
+
+Parameter | Category   | Choices   |
+----------|------------|-----------|
+          |  Invalid   | null      |
+ Book     |------------|-----------|
+          |  Valid     | B1        |
+          |------------|-----------|
+          |   [error]  |           |
+-----------------------------------|
+          |  Unavailable|  S1      |
+Service   |-------------|----------|
+          |  available  |  S2      |
+          |-------------|----------|
+          |   [error]   |          |
+-----------------------------------|
+
+5º Identify constraints on choices
+
+  none 
+
+6º Generate test cases and 7º Provide for each test case his expected result
+
+ Done on the BookstoreTest.java file 
+
+
+ Analyze the search method
+
+What method is used from the BookStoreService to achieve this function ?
+
+Answer: The method used is -> findBooks(SearchCriteria bookSearchCriteria)
+
+
+1º Identify the primary and Secondary functions of the method
+
+
+    Primary Function: Return the list of books present in the repository by doing Interactions 
+                        with the service(Taking into account the SearchCriteria provided and 
+                        getting the books that are in that criteria from the repository)
+
+                        If the interactions with the service do not give books from the repository then no book fits the search criteria and the function should
+                        return null
+                
+
+    Secondary Function:
+        Throw exception if the service is not available (CannotProcessRequestException)
+
+
+2º Identoify the inputs and outputs 
+
+    SearchCriteria -> SearchCriteria(author. title)                    
+
+    Inputs: Service, author, title, price 
+
+    Outputs: exception, interactions with service, books
+
+
+3º Identify the categories for each input parameter and 4º Partition each category into choices 
+
+---------------------------------------------
+Parameter       |  Category   |   Choices   |
+--------------------------------------------|
+Service         | available   | S1          |
+                |-------------|-------------|
+                | Unavailable | S2          |
+                |-------------|-------------|
+                | [error]     |             |
+---------------------------------------------
+                |             |             |
+SearchCriteria  |Some Bookes  | {B1, B2, B3}|
+                |-------------|-------------|
+                | No Books    |  {}         |
+---------------------------------------------
+                | null        | null        |
+Price           |-------------|-------------|
+                |price greater|             |
+                |then all     |     50      | 
+                |books        |             |
+                |-------------|-------------|
+                |Price smaller|             |
+                |then all     |      5      |
+                |books        |             |
+                |-------------|-------------|
+                |price greater|             |
+                |then some    |     25      | 
+                |books        |             |
+---------------------------------------------                
+
+5º Identify constraints on choices
+
+  none 
+
+6º Generate test cases and 7º Provide for each test case his expected result
+
+ Done on the BookstoreTest.java file 
+
